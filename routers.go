@@ -8,7 +8,7 @@ import (
 type Route struct {
 	Name        string
 	Method      string
-	Patter      string
+	Pattern     string
 	HandlerFunc http.HandlerFunc
 }
 

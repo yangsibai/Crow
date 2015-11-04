@@ -1,12 +1,11 @@
 package main
 
 import (
-	"io"
+	"log"
 	"net/http"
-	"os"
-	"strings"
 )
 
 func main() {
-
+	router := NewRouter()
+	log.Fatal(http.ListenAndServe(":8081", router))
 }

@@ -4,7 +4,9 @@ import (
 	"html/template"
 	"io"
 	"net/http"
+	"net/url"
 	"path"
+	"strings"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
@@ -20,14 +22,13 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func Download(w http.ResponseWriter, r *http.Request) {
-	url := getQuery(r)
-	if url == "" {
+	src := getQuery(r)
+	if src == "" {
 		http.Redirect(w, r, "/", 307)
 		return
 	}
-	//userip := getUserIP(r)
 
-	response, err := http.Get(url)
+	response, err := http.Get(src)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -35,6 +36,9 @@ func Download(w http.ResponseWriter, r *http.Request) {
 	}
 
 	defer response.Body.Close()
+
+	w.Header().Set("Content-Type", "application/octet-stream")
+	w.Header().Set("Content-Disposition", "attachment;filename="+getFileName(src))
 
 	_, err = io.Copy(w, response.Body) // read data from body and write to response writer
 
@@ -44,31 +48,18 @@ func Download(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//func downloadFromUrl(url string) {
-//fileName := getFileName(url)
-//output, err := os.Create(fileName)
-//if err != nil {
-//return
-//}
-//defer output.Close()
-
-//response, err := http.Get(url)
-//if err != nil {
-//return
-//}
-//defer response.Body.Close()
-
-//n, err := io.Copy(output, response.Body)
-//if err != nil {
-//return
-//}
-//}
-
-//func getFileName(url) {
-//tokens := strings.Split(url, "/")
-//fileName := tokens[len(tokens)-1]
-//return fileName
-//}
+func getFileName(src string) string {
+	u, err := url.Parse(src)
+	if err != nil {
+		return "noname"
+	}
+	tokens := strings.Split(u.Path, "/")
+	fileName := tokens[len(tokens)-1]
+	if fileName == "" {
+		return "noname"
+	}
+	return fileName
+}
 
 func getUserIP(r *http.Request) string {
 	if len(r.Header["X-Forwarded-For"]) != 0 {
@@ -79,6 +70,6 @@ func getUserIP(r *http.Request) string {
 }
 
 func getQuery(r *http.Request) string {
-	words := r.URL.Query()["q"]
+	words := r.URL.Query()["src"]
 	return words[0]
 }

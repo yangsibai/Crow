@@ -10,7 +10,7 @@ test: less build
 	go run
 
 run: stop build
-	nohup ./Newtonia>/dev/null 2>&1 &
+	nohup ./Crow>/dev/null 2>&1 &
 
 stop:
 	-lsof -t -i:${PORT} | xargs kill

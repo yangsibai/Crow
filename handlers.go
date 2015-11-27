@@ -37,7 +37,7 @@ func Download(w http.ResponseWriter, r *http.Request) {
 
 	defer response.Body.Close()
 
-	w.Header().Set("Content-Length", response.Header().Get("Content-Length"))
+	w.Header().Set("Content-Length", response.Header.Get("Content-Length"))
 	w.Header().Set("Content-Type", "application/octet-stream")
 	w.Header().Set("Content-Disposition", "attachment;filename="+getFileName(src))
 

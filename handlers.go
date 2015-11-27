@@ -37,9 +37,11 @@ func Download(w http.ResponseWriter, r *http.Request) {
 
 	defer response.Body.Close()
 
-	w.Header().Set("Content-Length", response.Header.Get("Content-Length"))
 	w.Header().Set("Content-Type", "application/octet-stream")
 	w.Header().Set("Content-Disposition", "attachment;filename="+getFileName(src))
+	for k, _ := range response.Header {
+		w.Header().Set(k, response.Header.Get(k))
+	}
 
 	_, err = io.Copy(w, response.Body) // read data from body and write to response writer
 

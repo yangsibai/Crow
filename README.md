@@ -10,7 +10,7 @@ File download proxy.
 
 ###Why?
 
-Sometimes we need to download a file, buy it's too slow, we can use a middle server transmit it.
+Sometimes we need to download a file, buy it's too slow, we can use a middle server transits it.
 
 ###License
 

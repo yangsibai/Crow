@@ -1,0 +1,35 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+}
+.container {
+  margin: auto;
+  width: 600px;
+  text-align: center;
+  padding: 30px 0;
+}
+.container h1 {
+  font-size: 30px;
+  font-weight: 100;
+}
+.container form input {
+  width: 400px;
+  height: 30px;
+  box-sizing: border-box;
+  outline: none;
+  padding: 3px;
+}
+.container form input:focus {
+  border: 1px solid #0033FF;
+}
+.container form button {
+  height: 30px;
+  padding: 3px 10px;
+  box-sizing: border-box;
+  background: #3F55DD;
+  border: none;
+  outline: none;
+  color: #F0F0F0;
+}

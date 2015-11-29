@@ -7,7 +7,7 @@ build:
 	go build -o Crow
 
 test: less build
-	go run
+	./Crow
 
 run: stop build
 	nohup ./Crow>/dev/null 2>&1 &

@@ -15,4 +15,9 @@ run: stop build
 stop:
 	-lsof -t -i:${PORT} | xargs kill
 
+pull:
+	git pull
+
+update: pull run
+
 .PHONY: build, run, test
